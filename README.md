@@ -182,11 +182,9 @@ switch (day) {
 You can’t extend an enum:  
 
 ```java
-class Weeks extends Days {} // DOES NOT COMPILE
-A semicolon is required if enums are declared with values
+class Weeks extends Days {} // DOES NOT COMPILE A semicolon is required if enums are declared with values
 
-EARTH(12756), MARS(6792), JUPITER(142984); //Semicolon is required here
-For the enum constructor; only private is permitted. Others will not compile
+EARTH(12756), MARS(6792), JUPITER(142984); // Semicolon is required here For the enum constructor; only private is permitted.
 
 public enum Planets {
   EARTH(12756), MARS(6792), JUPITER(142984); //Semicolon is required here
@@ -262,6 +260,7 @@ Anonymous inner classes enable you to declare and instantiate a class at the sam
 
 **Extend an abstract class**  
 
+```java
 public class Calculator {
    abstract class Numeric {
      abstract int addNumbers();
@@ -273,6 +272,7 @@ public class Calculator {
       return numeric.addNumbers();
    } 
 }
+```
 
 **Implement an interface**  
 
