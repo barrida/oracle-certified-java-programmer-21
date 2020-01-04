@@ -1,6 +1,6 @@
 # Oracle Certified Java SE 8 Programmer II Study Codes
 
-[Advanced Class Design](#1)
+[Advanced Class Design](#1)  
 [Design Patterns and Principles](#2)
 
 <a name="1">
