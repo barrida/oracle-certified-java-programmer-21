@@ -1,4 +1,4 @@
-# Oracle Certified Java SE 8 Programmer II Study Notes
+# Oracle Certified Java SE 8 Programmer II | Exam Notes
 
 [Advanced Class Design](#1)  
 [Design Patterns and Principles](#2)
