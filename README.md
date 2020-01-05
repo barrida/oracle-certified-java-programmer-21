@@ -1,4 +1,4 @@
-# Oracle Certified Java SE 8 Programmer II Study Codes
+# Oracle Certified Java SE 8 Programmer II Study Notes
 
 [Advanced Class Design](#1)  
 [Design Patterns and Principles](#2)
@@ -321,4 +321,67 @@ public class OuterClass{
 <a name="2">  
   
 ## Design Patterns and Principles
+
+<!-- wp:heading -->
+### Designing an Interface
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Let's revise the interface rules in Java 8. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>All interface methods are public and abstract and abstract by default, except for all non‐static and non‐default methods. On the other hand, the class implementing the interface must provide the proper modifiers. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>An interface may include constant public static final variables, default methods, and static methods. Following interface is valid:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Default methods are optionally overridden in concrete classes</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Interfaces cannot extend classes, nor can classes extend interfaces</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Interfaces cannot be marked final or instantiated directly</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Functional Interfaces</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The goal of this section is to identify valid and invalid functional interfaces. First, let's see at the definition of a functional interface:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><em>Each functional interface has <strong>a</strong> <strong>single abstract method</strong>, called the functional method for that functional interface, to which the lambda expression's parameter and return types are matched or adapted, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Java Docs</a>. </em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In this example, <code>BodyMassIndex</code> is a valid interface as it has<em><strong> a single abstract method</strong></em>.</p>
+<!-- /wp:paragraph -->
+
+```java
+//User defined functional interface 
+ @FunctionalInterface
+ interface BodyMassIndex  { 
+    double calculate(double weight, double height); 
+ }
+```
+<!-- wp:paragraph -->
+<p><em>@FunctionalInterface </em>annotation is used to ensure that the functional interface can’t have more than one abstract method. Applying the annotation to an interface, which has two abstract methods, would result in a compiler error</p>
+<!-- /wp:paragraph -->
+
+```java
+@FunctionalInterface
+interface BodyMassIndex  {
+  double getCalories();     
+  double calculate(double weight, double height);   
+}
+```
 
