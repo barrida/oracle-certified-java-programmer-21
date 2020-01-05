@@ -1,4 +1,4 @@
-package chapter1.virtualmethods;
+package virtualmethods;
 
 abstract class A {
 	String var = "variable A";

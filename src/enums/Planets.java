@@ -1,4 +1,4 @@
-package chapter1.enums;
+package enums;
 
 public enum Planets {
 
