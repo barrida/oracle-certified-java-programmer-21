@@ -1,7 +1,7 @@
 package virtualmethods;
 
 abstract class A {
-	String var = "variable A";
+	String var = "variable Workout";
 
 	public void print() {
 		System.out.println(var);
@@ -12,7 +12,7 @@ abstract class A {
 	}
 
 	public void foo() {
-		System.out.println("Class A");
+		System.out.println("Class Workout");
 	}
 }
 
