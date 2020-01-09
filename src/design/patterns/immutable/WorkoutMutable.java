@@ -5,13 +5,14 @@ import java.util.List;
 
 /**
  * @author Suleyman Yildirim
+ * <p>
  * How to make a class immuatable
- *
- * 1. Use a constructor to set all properties of the object.
- * 2. Mark all of the instance variables private and final .
+ * <p>
+ * 1. Use a constructor to set all properties of the object
+ * 2. Mark all of the instance variables private and final
  * 3. Don’t define any setter methods.
  * 4. If the instance fields include references to mutable objects, don't allow those objects to be changed
- * 5. Prevent methods from being overridden.
+ * 5. Prevent methods from being overridden
  */
 public final class WorkoutMutable {
 
@@ -19,17 +20,16 @@ public final class WorkoutMutable {
     private final String type;
     private final List<String> exercises;
 
-    //rule 1 passed
+    //rule 1
     public WorkoutMutable(String type, List<String> exercises) {
-        if (exercises == null && type.isEmpty())
+        if (type.isEmpty() && exercises == null)
             throw new RuntimeException("Workout type and exercise list are required");
         this.type = type;
         this.exercises = new ArrayList<String>(exercises);
     }
 
     //rule 3 passed: Don’t define any setter methods
-
-    //String class is immutable so we can return it
+    //String class is immutable so the client can not change its state
     public String getType() {
         return type;
     }

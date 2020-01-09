@@ -1,17 +1,18 @@
-package design.patterns.singleton.classsic;
+package design.patterns.singleton.static_initialization;
 
 /**
  * @author Suleyman Yildirim
  * <p>
- * Approach 1: Instantiate the singleton object directly in the definition of the instance reference
+ * Approach 2: Create a singleton using a static initialization block when the class is loaded
  */
 public class Workout {
 
-    private Workout() {
-    }
+    private static final Workout instance;
 
-    //Create private static final variable in the class, name it as instance
-    private static final Workout instance = new Workout();
+    //Create a singleton using a static initialization block when the class is loaded
+    static {
+        instance = new Workout();
+    }
 
     //Access the instance via static method, name it as getInstance()
     public static Workout getInstance() {
