@@ -1,4 +1,9 @@
-# Oracle Certified Java SE 8 Programmer II | Exam Notes
+# Java SE 8 Programmer II Certification | 1Z0-809
+
+This repository is created to provide documentation and code samples for Oracle Certified Java SE 8 Programmer II exam.
+
+
+# Table of Contents
 
 [Advanced Class Design](#1)  
 [Design Patterns and Principles](#2)
