@@ -324,11 +324,17 @@ public class OuterClass{
 }
 ```
 <a name="2">  
-  
-## Design Patterns and Principles
 
 <!-- wp:heading -->
-### Designing an Interface
+<h2>Introduction</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This section covers the OCP Java SE 8 Programmer II exam objectives: design an interface, define functional interfaces, implement polymorphism, create and use singleton classes and immutable classes.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Designing an Interface</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
@@ -336,23 +342,27 @@ public class OuterClass{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>All interface methods are public and abstract and abstract by default, except for all non‐static and non‐default methods. On the other hand, the class implementing the interface must provide the proper modifiers. </p>
+<p>An interface may extend another interface, and in doing so it inherits all of the abstract methods</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>An interface may include constant public static final variables, default methods, and static methods. Following interface is valid:</p>
+<p>All interface methods are public and abstract by default, except for all non‐static and non‐default methods. On the other hand, the class implementing the interface must provide the proper modifiers. </p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Default methods are optionally overridden in concrete classes</p>
+<p>An interface may include constant public static final variables, default methods, and static methods. </p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Interfaces cannot extend classes, nor can classes extend interfaces</p>
+<p>Default methods are optionally overridden in concrete classes. When you extend an interface that contains a default method, you can do the following (<a href="https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html"><em>Java Docs</em></a>):</p>
 <!-- /wp:paragraph -->
 
+<!-- wp:list -->
+<ul><li>Not mention the default method at all, which lets your extended interface inherit the default method.</li><li>Redeclare the default method, which makes it&nbsp;<code>abstract</code>.</li><li>Redefine the default method, which overrides it.</li></ul>
+<!-- /wp:list -->
+
 <!-- wp:paragraph -->
-<p>Interfaces cannot be marked final or instantiated directly</p>
+<p>Interfaces cannot extend classes, nor can classes extend interfaces. They cannot be marked final or instantiated directly. </p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
@@ -360,33 +370,311 @@ public class OuterClass{
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>The goal of this section is to identify valid and invalid functional interfaces. First, let's see at the definition of a functional interface:</p>
+<p>The goal of this section is to identify valid and invalid functional interfaces. First, let's look at the definition of a functional interface:</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p><em>Each functional interface has <strong>a</strong> <strong>single abstract method</strong>, called the functional method for that functional interface, to which the lambda expression's parameter and return types are matched or adapted, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Java Docs</a>. </em></p>
+<p><em>Each functional interface has <strong>a</strong> <strong>single abstract method</strong> to which the lambda expression's parameter and return types are matched or adapted, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Java Docs</a>. </em></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 <p>In this example, <code>BodyMassIndex</code> is a valid interface as it has<em><strong> a single abstract method</strong></em>.</p>
 <!-- /wp:paragraph -->
 
-```java
-//User defined functional interface 
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted"> //User defined functional interface 
  @FunctionalInterface
  interface BodyMassIndex  { 
     double calculate(double weight, double height); 
- }
-```
+ }</pre>
+<!-- /wp:preformatted -->
+
 <!-- wp:paragraph -->
 <p><em>@FunctionalInterface </em>annotation is used to ensure that the functional interface can’t have more than one abstract method. Applying the annotation to an interface, which has two abstract methods, would result in a compiler error</p>
 <!-- /wp:paragraph -->
 
-```java
-@FunctionalInterface
-interface BodyMassIndex  {
-  double getCalories();     
-  double calculate(double weight, double height);   
-}
-```
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">@FunctionalInterface interface BodyMassIndex  
+{ 
+  double getCalories();
+  double calculate(double weight, double height);
+}</pre>
+<!-- /wp:preformatted -->
 
+<!-- wp:paragraph -->
+<p><strong>Valid and invalid functional Interfaces</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Interface A is a functional interface as it has a single abstract method</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>@FunctionalInterface
+interface A {
+    int run();
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>B is also a functional interface. It inherits run() method from the interface A. Therefore, it has a single abstract method.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>@FunctionalInterface
+   interface B extends A {
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>D is a valid functional interface for the same reasons above</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>@FunctionalInterface
+interface D extends A, B { }</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>C is not a functional interface as it has "two" abstract methods: run() and lift(). run() is inherited from the interface A. If it is marked with the @FunctionalInterface, this will result in a compile error.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>interface C extends A {
+    void lift();
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:heading -->
+<h2>Polymorphism</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Polymorphism is the ability of a single interface to support multiple underlying forms. It enables one object to take on many different forms. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Java object may be accessed using a reference with the same type as the object, a reference that is a superclass of the object, or a reference that defines an interface that the object implements, either directly or through a superclass. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Rules to distinguish between object and reference:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li>The type of an object determines which properties exist within the object in memory.</li><li>The type of the reference to the object determines which methods and variables are accessible to the Java program.</li></ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3><strong>Casting</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Here are some basic rules to keep in mind when casting variables:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li>Casting an object from a subclass to a superclass doesn’t require an explicit cast.</li><li>Casting an object from a superclass to a subclass requires an explicit cast.</li><li>The compiler will not allow casts to unrelated types.</li><li>Even when the code compiles without issue, an exception may be thrown at runtime if the object being cast is not actually an instance of that class</li></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Let's have a look at the third rule, which is quite important for the exam</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">Parent p = new Child(); // valid upcasting
+Child c = (Child) p; // Valid downcasting
+
+Parent p1 = new Parent();
+Child c1 = (Child) p1; // Compiles but throws java.lang.ClassCastException</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:paragraph -->
+<p>Casting is not without its limitations. Even though two classes share a related hierarchy, that doesn’t mean an instance of one can automatically be cast to another</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">class Child extends Parent{}
+
+Parent p = new Child();
+Child c = (Child) p; // Valid downcasting
+ 
+Parent p = new Parent();
+Child c = (Child) p; // Compiles but throws ClassCastException</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading -->
+<h2>Design Patterns</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>In this section, we will cover two design patterns: <em>immutable object pattern</em> and <em>singleton pattern</em>. You need to be able to create and use singleton classes and immutable classes for the OCP 8 exam.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Immutable Object Pattern</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>An object is considered&nbsp;<em>immutable</em>&nbsp;if its state cannot change after it is constructed.  Since they cannot change state, they are thread-safe.  The following rules define a simple strategy for creating immutable objects. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li><em>Use a constructor to set all properties of the object </em></li><li> <em>Mark all of the instance variables private and final </em> </li><li> <em>Don’t define any setter methods</em></li><li> <em>If the instance fields include references to mutable objects, don't allow those objects to be changed</em> </li><li> <em>Prevent methods from being overridden </em> </li></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Let's create a mutable class and transform it into an immutable class. In this example, all rules are passed except for <em>rule 4</em>. Since the <em>List&lt;&gt;</em> interface is mutable,  the client of the function can modify the state of the list. Note that the <em>String </em>class is immutable. Therefore, we don't have to worry about <em>rule 4</em>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">public final class WorkoutMutable {
+
+    private final String type;
+    private final List&lt;String&gt; exercises;
+
+    public WorkoutMutable(String type, List&lt;String&gt; exercises) {
+        if (type.isEmpty() &amp;&amp; exercises == null)
+            throw new RuntimeException("Workout type and exercise list are    required");
+        this.type = type;
+        this.exercises = new ArrayList&lt;String&gt;(exercises);
+    }
+
+    //String class is immutable so we don't have to worry about rule 4
+    public String getType() {
+        return type;
+    }
+     
+    //rule 4 failed
+    public List&lt;String&gt; getExercises() {
+        return exercises;
+    }
+
+}</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:paragraph -->
+<p>We need to make sure that no references to the "exercises" object are publicly available. If the user does need access to the data in the List, we can create a one‐time copy of the data that is returned to the user. We can replace the <em>getExercises </em>with <em>getCopyOfExercises</em>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">public List&lt;String&gt; getCopyOfExercises() {
+    List&lt;String&gt; copyOfExercises = new ArrayList&lt;&gt;(exercises);
+    Collections.<em>copy</em>(copyOfExercises, exercises);
+    return copyOfExercises;
+}</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Singleton Pattern</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A singleton is simply a class that is instantiated exactly once. The main reason to use singleton is that we want a single instance of a particular object in the memory.  The common approaches are based on creating three main elements in the class:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li><strong>private constructor</strong> to guarantee exactly one instance will exist once the class is initialized</li><li><strong>private static member </strong>to make sure that the instance is only  accessible only within its own class</li><li><strong>public static function</strong> to access the single instance</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Approach 1:  Instantiate the singleton object directly in the definition of the instance reference </h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>In this approach, we create a private static final variable in the class, usually name it as "instance". All calls to <em>Workout.getInstance</em> return the same object reference, and no other <em>Workout </em>instance will be created. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">public class Workout {
+
+    //Create private static final variable in the class
+    private static final Workout <em>instance </em>= new Workout();
+
+    //Create private constructor
+    private Workout() { }
+
+    //Access the instance via static method, name it as getInstance()
+    public static Workout getInstance() {
+        return <em>instance</em>;
+    }
+
+    public static void main(String[] args) {
+        Workout w1 = Workout.<em>getInstance</em>();
+        Workout w2 = Workout.<em>getInstance</em>();
+        System.<em>out</em>.println(w1.equals(w2));
+    }
+}</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Approach 2: Static initialization block</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>In this approach, we create a singleton using a static initialization block instead of using private constructor. A static initialization block allows additional steps to be taken to set up the singleton after it has been created.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">public class Workout {
+
+    private static final Workout <em>instance</em>;
+
+    //Create a singleton using a static initialization block
+    static {
+        <em>instance </em>= new Workout();
+    }
+
+    //Access the instance via static method
+    public static Workout getInstance() {
+        return <em>instance</em>;
+    }
+
+    public static void main(String[] args) {
+        Workout w1 = Workout.<em>getInstance</em>();
+        Workout w2 = Workout.<em>getInstance</em>();
+        System.<em>out</em>.println(w1.equals(w2));
+    }
+}</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Approach 3: Lazy Instantiation</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Lazy instantiation is different from previous approaches in that we delay the creation of the singleton until it is requested by the client. In other words, we do not create the singleton object when the class is loaded. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">public class Workout {
+
+    private static Workout <em>instance</em>;
+    private Workout(){ }
+
+    public static Workout getInstance() {
+        if (<em>instance </em>== null) {
+            <em>instance </em>= new Workout();
+        }
+        return <em>instance</em>;
+    }
+
+    public static void main(String[] args) {
+        Workout w1 = Workout.<em>getInstance</em>();
+        Workout w2 = Workout.<em>getInstance</em>();
+        System.<em>out</em>.println(w1.equals(w2));
+    }
+}</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:separator -->
+<hr class="wp-block-separator"/>
+<!-- /wp:separator -->
+
+<!-- wp:heading -->
+<h2>References</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li>OCP: Oracle Certified Professional Java SE 8 Programmer II Study Guide, by Jeanne Boyarsky </li><li>Effective Java, Third Edition, by Joshua Bloch  </li><li><em><a href="https://docs.oracle.com/javase/tutorial/java/">The Java Tutorials</a></em></li></ul>
+<!-- /wp:list -->
