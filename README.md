@@ -6,7 +6,8 @@ This repository is created to provide documentation and code samples for Oracle 
 # Table of Contents
 
 [Advanced Class Design](#1)  
-[Design Patterns and Principles](#2)
+[Design Patterns and Principles](#2)  
+[Generics and Collections](#3)
 
 <a name="1">
   
@@ -678,6 +679,8 @@ Child c = (Child) p; // Compiles but throws ClassCastException</pre>
 <!-- wp:list -->
 <ul><li>OCP: Oracle Certified Professional Java SE 8 Programmer II Study Guide, by Jeanne Boyarsky </li><li>Effective Java, Third Edition, by Joshua Bloch  </li><li><em><a href="https://docs.oracle.com/javase/tutorial/java/">The Java Tutorials</a></em></li></ul>
 <!-- /wp:list -->
+
+<a name="3">  
 
 # Generics And Collections
 
