@@ -678,3 +678,92 @@ Child c = (Child) p; // Compiles but throws ClassCastException</pre>
 <!-- wp:list -->
 <ul><li>OCP: Oracle Certified Professional Java SE 8 Programmer II Study Guide, by Jeanne Boyarsky </li><li>Effective Java, Third Edition, by Joshua Bloch  </li><li><em><a href="https://docs.oracle.com/javase/tutorial/java/">The Java Tutorials</a></em></li></ul>
 <!-- /wp:list -->
+
+# Generics And Collections
+
+This section mentions about the Generics, and Java Collections Framework (List, Set, Map, and Queue).   
+
+## Generics 
+
+Coming Soon :)  
+
+## Java Collections Framework
+In this section, we will cover four main interfaces in the Java Collections Framework:List, Set, Map, and Queue  
+
+### List
+You usually use a list when you want an ordered collection that can contain duplicate entries. All list methods have in common is that they are ordered and allow duplicates  
+
+**ArrayList**  
+When to use: Use ArrayList, when you are not sure which collection to use  
+Look up is constant time, O(1), adding/removing is slower  
+Use when you are reading more often than writing to the ArrayList  
+
+**LinkedList**  
+When to use: You’ll be using it as Queue  
+Pros: You can access, add, and remove from the beginning and end of the list in constant time  
+Cons: Dealing with an arbitrary index takes linear time, O(n)  
+
+**Stack**  
+A Stack is a data structure where you add and remove elements from the top of the stack. If you need a stack, use an ArrayDeque  
+
+**List methods**  
+The method signatures that you need to know are listed below:  
+
+void add(E element)           
+void add(int index, E element)      
+E get(int index)                  
+int indexOf(Object o)               
+int lastIndexOf(Object o)           
+void remove(int index)            
+E set(int index, E e)  
+
+### Set  
+You use a set when you don’t want to allow duplicate entries
+
+**HashSet**  
+
+A HashSet stores its elements in a hash table  
+Pros: Adding elements and checking if an element is in the set both have constant time
+Cons: You lose the order in which you inserted the elements  
+
+**TreeSet**  
+
+A TreeSet stores its elements in a sorted tree structure. It implements the NavigableSet interface    
+Pros: The set is always in sorted order
+Cons: Adding and checking if an element is present are both O(log n)
+
+### Queue
+
+**LinkedList**  
+LinkedList implements both the List and Queue interfaces. It is a double ended queue 
+
+**ArrayDeque**  
+A “pure” double-ended queue and more efficient than LinkedList  
+
+**Queue Methods**  
+There are only seven methods that you need to know in addition to the inherited Collection ones. These methods are shown below  
+
+boolean add(E e)  
+E element()  
+boolean offer(E e)  
+E remove()  
+void push(E e)  
+E poll()  
+E peek()  
+E pop()  
+
+### Map
+You use a map when you want to identify values by a key  
+
+**HashMap**  
+A HashMap stores the keys in a hash table  
+
+Pros: Adding elements and retrieving the element by key both have constant time  
+Cons: You lose the order in which you inserted the elements. If you are concerned with this, use LinkedHashMap    
+
+**TreeMap**  
+A TreeMap stores the keys in a sorted tree structure  
+
+Pros: The keys are always in sorted order  
+Cons: Adding and checking if a key is present are O(log n)  
+
