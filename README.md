@@ -4,10 +4,11 @@ This repository is created to provide documentation and code samples for Oracle 
 
 
 # Table of Contents
-
 [Advanced Class Design](#1)  
 [Design Patterns and Principles](#2)  
 [Generics and Collections](#3)
+[References](#99)
+
 
 <a name="1">
   
@@ -668,18 +669,6 @@ Child c = (Child) p; // Compiles but throws ClassCastException</pre>
 }</pre>
 <!-- /wp:preformatted -->
 
-<!-- wp:separator -->
-<hr class="wp-block-separator"/>
-<!-- /wp:separator -->
-
-<!-- wp:heading -->
-<h2>References</h2>
-<!-- /wp:heading -->
-
-<!-- wp:list -->
-<ul><li>OCP: Oracle Certified Professional Java SE 8 Programmer II Study Guide, by Jeanne Boyarsky </li><li>Effective Java, Third Edition, by Joshua Bloch  </li><li><em><a href="https://docs.oracle.com/javase/tutorial/java/">The Java Tutorials</a></em></li></ul>
-<!-- /wp:list -->
-
 <a name="3">  
 
 # Generics And Collections
@@ -1075,3 +1064,10 @@ In this example, we use some of the Map methods to calculate the frequency of ea
     for (Integer value : map.values()) {
         System.out.print(value + ", "); // 3, 2, 1,
     }
+
+<a name="99">  
+
+# References  
+1) OCP: Oracle Certified Professional Java SE 8 Programmer II Study Guide, by Jeanne Boyarsky  
+2) Effective Java, Third Edition, by Joshua Bloch  
+3) <a href="https://docs.oracle.com/javase/tutorial/java/">The Java Tutorials</a>  
