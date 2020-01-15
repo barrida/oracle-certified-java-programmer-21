@@ -6,7 +6,7 @@ This repository is created to provide documentation and code samples for Oracle 
 # Table of Contents
 [Advanced Class Design](#1)  
 [Design Patterns and Principles](#2)  
-[Generics and Collections](#3)
+[Generics and Collections](#3)  
 [References](#99)
 
 
