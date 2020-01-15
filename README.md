@@ -683,42 +683,244 @@ Child c = (Child) p; // Compiles but throws ClassCastException</pre>
 <a name="3">  
 
 # Generics And Collections
-
-This section mentions about the Generics, and Java Collections Framework (List, Set, Map, and Queue).   
+This section mentions about the Generics, and Java Collections Framework (List, Set, Map, and Queue).  
 
 ## Generics 
+Generics enable types (classes and interfaces) to be parameters when defining classes, interfaces and methods. It enables you to re-use the same code.  
 
-Coming Soon :)  
+### Type Parameter Naming Conventions  
+By convention, type parameter names are single, uppercase letters. The most commonly used type parameter names are:
+
+    E - Element (used extensively by the Java Collections Framework)
+    K - Key
+    N - Number
+    T - Type
+    V - Value
+    S,U,V etc. - 2nd, 3rd, 4th types
+
+### Generic Classes  
+Generic classes are very useful if you need to use different classes as the type parameter. You can create a generic class with a generic data type T. For example, the *Food* class has a generic type variable declared after the name of the class. It means that you can create Food instances using different data types   
+
+    public class Food<T> {
+        private T ingredients;    
+        public T getIngredients(){
+            return ingredients;
+        }
+        public void setIngredients(T ingredients) {
+            this.ingredients = ingredients;
+        }
+    }
+
+Let's create a food instance with String data type  
+
+    Food<String> food = new Food<>();
+    food.setIngredients("protein: 200 gr; carb: 300, fat: 75");
+
+Maybe you changed your mind and decided to create another class that holds the ingredients  
+
+    class Ingredients {
+        private String name;
+        private int calories;
+    
+        Ingredients(String name, int calories) {
+            this.name = name;
+            this.calories = calories;
+        }
+    }
+    
+Then, you can create a food instance using *Ingredients* data type  
+
+    Ingredients ingredients = new Ingredients("protein", 200);
+    Food<Ingredients> ingredientsFood = new Food<>();
+    ingredientsFood.setIngredients(ingredients);
+
+Let's look at the next example. Why don't we create a food instance with Map data type? Don't worry if you don't understand the syntax. We will cover Map interface in the next section  
+
+    Food<Map<String, Integer>> foodAsMap = new Food<>();
+    Map<String, Integer> foods = new HashMap<String,Integer>();
+    foods.put("protein", 200);
+    foods.put("carb", 300);
+    foods.put("fat", 75);
+    foodAsMap.setIngredients(foods);
+
+Generic classes can have two type parameters as well. In this example, we defined FoodMultipleType generic class that has two parameters. K for a map key, V for a map value 
+    
+    public class FoodMultipleType<K, V> implements FoodPair<K, V> {
+        private K name;
+        private V calories;
+    
+        public FoodMultipleType(K name, V value) {
+            this.name = name;
+            this.calories = value;
+        }
+    
+        @Override
+        public K getName() { return name; }
+    
+        @Override
+        public V getCalories() { return calories; }
+    }
+    
+To use this class, we can implement the following:  
+
+     FoodPair<String, Integer> tuna = new FoodMultipleType<String, Integer>("tuna", 205);
+     FoodPair<String, Integer> brownRice = new FoodMultipleType<String, Integer>("brown rice", 214);
+
+### Generic Interfaces  
+
+An interface can also declare a formal type parameter. For example, List interface uses a generic type. 
+
+    public interface List<E> extends Collection<E> {
+        int size();
+        boolean isEmpty();
+        boolean contains(Object var1);
+        ...
+    }
+
+You can also define your own interface. Let's create a Diet interface. There are three approaches implementing Diet interface.  
+
+    public interface Diet<T> {
+        void printDietList(T t);
+    }
+    
+**Approach 1: Specify the generic type in the class**  
+The following concrete class says that it deals only with LowCarbHighProtein class  
+
+    class LowCarbDiet implements Diet<LowCarbHighProtein> {
+        @Override
+        public void printDietList(LowCarbHighProtein t) {
+            //do something with t
+        }
+    }
+**Approach 2: Create a generic class**  
+The following concrete class allows the caller to specify the type of the generic  
+
+    class LowCarbAbstractDiet<U> implements Diet<U> {
+        @Override
+        public void printDietList(U u) { // do someti}
+    }
+    
+**Approach 3: Not use generics at all**  
+This is the old way of writing code. It generates a compiler warning about Shippable being a raw type, but it does compile  
+
+    class LowCarbDietSimple implements Diet {
+        @Override
+        public void printDietList(Object o) {}
+    }
+
+### Generic Methods
+Generic methods are methods that introduce their own type parameters. This generic method, compare, which compares two FoodMultipleType objects  
+
+    public static <K, V> boolean compare(FoodMultipleType<K, V> p1, FoodMultipleType<K, V> p2) {
+        return p1.getName().equals(p2.getName()) &&
+                p1.getCalories().equals(p2.getCalories());
+    }
+
+     FoodPair<String, Integer> tuna = new FoodMultipleType<String,Integer>("tuna",205);
+     FoodMultipleType<String, Integer> brownRice = new FoodMultipleType<String,Integer>("brown rice",214);
+  
+     Util.<String,Integer>compare((FoodMultipleType<String, Integer>) tuna,brownRice);
+     Util.compare((FoodMultipleType<String, Integer>) tuna,brownRice);//
+
+### Bounds
+
+ **Upper Bound**  
+The unbounded wildcard type is specified using the wildcard character (?), for example, List<?>. This is called a list of unknown type. This method prints a list of any type.
+
+    private static void unboud(List<?> list) {
+        for (Object elem : list)
+            System.out.print(elem + " ");
+        System.out.println();
+    }
+
+**Lower Bound**  
+A lower bounded wildcard is expressed using List<? super ClassName>, such as List<? super Integer>. This method works on lists of Integer and the supertypes of Integer, such as Integer, Number, and Object
+
+    private static void lowerBound(List<? super Integer> list) {
+        for (int i = 0; i < 10 ; i++) {
+            list.add(i);
+        }
+        System.out.println(list);
+    }
+     
+
+ **Upper Bound**  
+ An upper bounded wildcard is specified using List<? extends ClassName>, List<? extends Number>. This method works on lists of Number and the subtypes of Number, such as Integer, Double, and Float.  
+ 
+     private static double upperBound(List<? extends Number> list) {
+         double s = 0.0;
+         for (Number n : list)
+             s += n.doubleValue();
+         return s;
+     }
+
+Let's look at how these methods are called. Note that we can pass Integer and Double list to the upperBound method. On the other hand, lowerBound method only accepts Integer and its super classes. The undound method doesn't have a restriction.
+
+     List<Integer> intList = Arrays.<Integer>asList(1, 2, 3);
+     System.out.println(upperBound(intList)); // Output: 6.0
+
+     List<Double> doubleList = Arrays.<Double>asList(4.3, 7.1, 2.4);
+     System.out.println(upperBound(doubleList)); // Output: 13.799999999999999
+
+     lowerBound(intList); // Output: 0 1 2
+     //lowerBound(doubleList); // compile error
+
+     unboud(intList); // Output: 1 2 3
+     unboud(doubleList); // Output: 4.3 7.1 2.4 
 
 ## Java Collections Framework
-In this section, we will cover four main interfaces in the Java Collections Framework:List, Set, Map, and Queue  
+In this section, we will cover four main interfaces in the Java Collections Framework: List, Set, Map, and Queue.  
 
 ### List
-You usually use a list when you want an ordered collection that can contain duplicate entries. All list methods have in common is that they are ordered and allow duplicates  
+You usually use a list when you want an ordered collection that can contain duplicate entries. All list methods are ordered and allow duplicates.
 
 **ArrayList**  
 When to use: Use ArrayList, when you are not sure which collection to use  
 Look up is constant time, O(1), adding/removing is slower  
 Use when you are reading more often than writing to the ArrayList  
 
+    List<String> list = new ArrayList<>();
+    List<Integer> list = new ArrayList<>();
+    ...
+
 **LinkedList**  
-When to use: You’ll be using it as Queue  
-Pros: You can access, add, and remove from the beginning and end of the list in constant time  
+When to use: LinkedList is usually used as a Queue  
+Pros: You can access, add, and remove from the beginning and end of the list in constant time, O(1)  
 Cons: Dealing with an arbitrary index takes linear time, O(n)  
 
+    LinkedList<String> linkedList = new LinkedList<String>();  
+
 **Stack**  
-A Stack is a data structure where you add and remove elements from the top of the stack. If you need a stack, use an ArrayDeque  
+A Stack is a data structure that you add and remove elements from the top of the stack. If you need a stack, use an ArrayDeque  
+
+    Deque<String> stack = new ArrayDeque<>();
+    stack.push("1");
+    stack.push("2");
+    stack.pop(); // 2
 
 **List methods**  
-The method signatures that you need to know are listed below:  
+The List methods that you need to know are listed below:  
 
-void add(E element)           
-void add(int index, E element)      
-E get(int index)                  
-int indexOf(Object o)               
-int lastIndexOf(Object o)           
-void remove(int index)            
-E set(int index, E e)  
+    void add(E element)           
+    void add(int index, E element)      
+    E get(int index)                  
+    int indexOf(Object o)               
+    int lastIndexOf(Object o)           
+    void remove(int index)            
+    E set(int index, E e)  
+
+This example shows the usage of list methods:  
+
+      List<String> list = new ArrayList<>();
+      list.add("suleyman"); // suleyman
+      list.add(1,"yildirim"); // [suleyman, yildirim]
+      list.get(1); //yildirim
+      //list.set(2, "asd"); // java.lang.IndexOutOfBoundsException
+      list.set(1, "DDD"); //[suleyman, DDD]
+      list.indexOf("DDD"); // 1
+      list.lastIndexOf("suleyman"); // 1
+      list.remove(0); // [DDD]
+      list.remove("DDD"); // []
 
 ### Set  
 You use a set when you don’t want to allow duplicate entries
@@ -729,40 +931,95 @@ A HashSet stores its elements in a hash table
 Pros: Adding elements and checking if an element is in the set both have constant time
 Cons: You lose the order in which you inserted the elements  
 
+    Set<String> hashSet = new HashSet<>();
+    hashSet.add("suleyman");
+    hashSet.add("canan");
+    hashSet.add("fatma");
+    hashSet.add("omur");
+    hashSet.add("fatma");
+
+    System.out.println("HashSet values:");
+    for (String value : hashSet) {
+        System.out.print(value + " ");
+    }
+    
+    // HashSet values: Canan Suleyman Fatma Omur 
+
 **TreeSet**  
 
 A TreeSet stores its elements in a sorted tree structure. It implements the NavigableSet interface    
 Pros: The set is always in sorted order
 Cons: Adding and checking if an element is present are both O(log n)
 
+    Set<String> treeSet = new TreeSet<>();
+    treeSet.add("suleyman");
+    treeSet.add("canan");
+    treeSet.add("fatma");
+    treeSet.add("omur");
+    treeSet.add("fatma");
+
+    System.out.println("TreeSet values:");
+    for (String value : treeSet) {
+        System.out.print(value + " ");
+    }
+    // TreeSet values: Canan Fatma Omur Suleyman 
+
 ### Queue
 
 **LinkedList**  
 LinkedList implements both the List and Queue interfaces. It is a double ended queue 
+    
+    LinkedList<String> linkedList = new LinkedList<String>();  
 
 **ArrayDeque**  
 A “pure” double-ended queue and more efficient than LinkedList  
 
-**Queue Methods**  
-There are only seven methods that you need to know in addition to the inherited Collection ones. These methods are shown below  
+    Deque<String> stack = new ArrayDeque<>();
+    stack.push("1");
+    stack.push("2");
 
-boolean add(E e)  
-E element()  
-boolean offer(E e)  
-E remove()  
-void push(E e)  
-E poll()  
-E peek()  
-E pop()  
+**Queue Methods**  
+You need to know the methods below in addition to the ones inherited from Collection interface. These methods are shown below  
+
+    boolean add(E e)  
+    E element()  
+    boolean offer(E e)  
+    E remove()  
+    void push(E e)  
+    E poll()  
+    E peek()  
+    E pop() 
+
+This example shows the usage of Queue methods:  
+
+    Queue<Integer> queue = new ArrayDeque<>();
+    queue.add(1); // [1]
+    queue.add(2); // [1, 2]
+    queue.offer(3); // [1, 2, 3]
+    queue.offer(4); // [1, 2, 3, 4]
+    queue.poll(); // [2, 3, 4]
+    queue.peek(); // [2, 3, 4]
+    queue.poll(); // 3, 4]
 
 ### Map
-You use a map when you want to identify values by a key  
+You use a map when you want to identify values by a key    
 
 **HashMap**  
 A HashMap stores the keys in a hash table  
 
 Pros: Adding elements and retrieving the element by key both have constant time  
-Cons: You lose the order in which you inserted the elements. If you are concerned with this, use LinkedHashMap    
+Cons: You lose the order in which you inserted the elements. If you are concerned with this, use LinkedHashMap   
+
+    Map<String, Integer> hashMap = new HashMap<>();
+    hashMap.put("11", 10);
+    hashMap.put("gfds", 20);
+    hashMap.put("gnh", 30);
+    hashMap.put("100", 30);
+    hashMap.put("567", 40);
+    hashMap.put("hjk", 50);
+    hashMap.put("aa", 60);
+    hashMap.put("bf", 70);
+    System.out.println(hashMap); // {11=10, gnh=30, aa=60, 100=30, bf=70, 567=40, hjk=50, gfds=20}
 
 **TreeMap**  
 A TreeMap stores the keys in a sorted tree structure  
@@ -770,3 +1027,51 @@ A TreeMap stores the keys in a sorted tree structure
 Pros: The keys are always in sorted order  
 Cons: Adding and checking if a key is present are O(log n)  
 
+Note that Integer keys are tricky in TreeMap. That's why the element (100,30) showed up before (11,10):  
+
+    Map<String, Integer> treeMap = new TreeMap<>();
+    treeMap.put("11", 10);
+    treeMap.put("gfds", 20);
+    treeMap.put("gnh", 30);
+    treeMap.put("100", 30);
+    treeMap.put("567", 40);
+    treeMap.put("hjk", 50);
+    treeMap.put("aa", 60);
+    treeMap.put("bf", 70);
+    System.out.println(treeMap); // {100=30, 11=10, 567=40, aa=60, bf=70, gfds=20, gnh=30, hjk=50}
+
+**Map Methods**  
+
+You need to know the following methods below:  
+
+    void clear()
+    boolean isEmpty() 
+    int size() 
+    V get(Object key) 
+    V put(K key, V value)
+    V remove(Object key) 
+    containsKey(Object key)
+    containsValue(Object)
+    Set<K> keySet()
+    Collection<V> values()
+
+In this example, we use some of the Map methods to calculate the frequency of each word in a String list  
+
+    String[] str = {"aaa", "bb", "aaa", "c", "bb", "aaa"};
+    Map<String, Integer> map = new HashMap<>();
+    for (String value : str) {
+        if (!map.containsKey(value)) {
+            map.put(value, 1);
+        } else {
+            int frequency = map.get(value);
+            map.put(value, ++frequency);
+        }
+    }
+
+    for (String key : map.keySet()) {
+        System.out.print(key + ", "); //aaa, bb, c,
+    }
+
+    for (Integer value : map.values()) {
+        System.out.print(value + ", "); // 3, 2, 1,
+    }

@@ -7,6 +7,5 @@ class LowCarbAbstractDiet<U> implements Diet<U> {
 
     @Override
     public void printDietList(U u) {
-
     }
 }

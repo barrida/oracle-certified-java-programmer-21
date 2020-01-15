@@ -1,7 +1,6 @@
 package generics_and_collections.generic.bounds;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,9 +17,8 @@ public class Food {
      */
     private static void lowerBound(List<? super Integer> list) {
         for (int i = 0; i < list.size(); i++) {
-            list.add(i);
+            System.out.print(i + " ");
         }
-        System.out.println(list);
     }
 
     /**
@@ -44,24 +42,32 @@ public class Food {
      *
      * @param list
      */
-    private static void unboud(List<?> list) {
+    private static void unbound(List<?> list) {
+        System.out.println();
         for (Object elem : list)
             System.out.print(elem + " ");
-        System.out.println();
+
     }
 
     public static void main(String[] args) {
+        List<Integer> intList = new ArrayList<Integer>();
+        intList.add(1);
+        intList.add(2);
+        intList.add(3);
 
-        List<Integer> intList = Arrays.<Integer>asList(1, 2, 3);
         System.out.println(upperBound(intList));
 
-        List<Double> doubleList = Arrays.<Double>asList(4.3, 7.1, 2.4);
-        System.out.println(upperBound(doubleList));
+        List<Double> doubleList = new ArrayList<Double>();
+        doubleList.add(4.3);
+        doubleList.add(7.1);
+        doubleList.add(2.4);
 
+        System.out.println(upperBound(doubleList));
+        System.out.println(intList);
         lowerBound(intList);
         //lowerBound(doubleList); // compile error
 
-        unboud(intList);
-        unboud(doubleList);
+        unbound(intList);
+        unbound(doubleList);
     }
 }
