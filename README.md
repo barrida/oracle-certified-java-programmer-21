@@ -786,7 +786,7 @@ The following concrete class allows the caller to specify the type of the generi
 
     class LowCarbAbstractDiet<U> implements Diet<U> {
         @Override
-        public void printDietList(U u) { // do someti}
+        public void printDietList(U u) { // do something}
     }
     
 **Approach 3: Not use generics at all**  
@@ -798,22 +798,24 @@ This is the old way of writing code. It generates a compiler warning about Shipp
     }
 
 ### Generic Methods
-Generic methods are methods that introduce their own type parameters. This generic method, compare, which compares two FoodMultipleType objects  
+Generic methods are methods that introduce their own type parameters. This generic method compares two FoodMultipleType objects  
 
-    public static <K, V> boolean compare(FoodMultipleType<K, V> p1, FoodMultipleType<K, V> p2) {
-        return p1.getName().equals(p2.getName()) &&
-                p1.getCalories().equals(p2.getCalories());
+    class Util {
+        public static <K, V> boolean compare(FoodMultipleType<K, V> p1, FoodMultipleType<K, V> p2) {
+            return p1.getName().equals(p2.getName()) &&
+                    p1.getCalories().equals(p2.getCalories());
+        }
     }
+
+Let's see how we use the compare method  
 
      FoodPair<String, Integer> tuna = new FoodMultipleType<String,Integer>("tuna",205);
      FoodMultipleType<String, Integer> brownRice = new FoodMultipleType<String,Integer>("brown rice",214);
-  
      Util.<String,Integer>compare((FoodMultipleType<String, Integer>) tuna,brownRice);
-     Util.compare((FoodMultipleType<String, Integer>) tuna,brownRice);//
 
 ### Bounds
 
- **Upper Bound**  
+**Unbounded**  
 The unbounded wildcard type is specified using the wildcard character (?), for example, List<?>. This is called a list of unknown type. This method prints a list of any type.
 
     private static void unboud(List<?> list) {
