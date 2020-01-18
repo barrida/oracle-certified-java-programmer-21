@@ -919,7 +919,7 @@ You use a set when you don’t want to allow duplicate entries
 **HashSet**  
 
 A HashSet stores its elements in a hash table  
-Pros: Adding elements and checking if an element is in the set both have constant time
+Pros: Adding elements and checking if an element is in the set both have a constant time  
 Cons: You lose the order in which you inserted the elements  
 
     Set<String> hashSet = new HashSet<>();
@@ -939,8 +939,8 @@ Cons: You lose the order in which you inserted the elements
 **TreeSet**  
 
 A TreeSet stores its elements in a sorted tree structure. It implements the NavigableSet interface    
-Pros: The set is always in sorted order
-Cons: Adding and checking if an element is present are both O(log n)
+Pros: The set is always in sorted order  
+Cons: Adding and checking if an element is present are both O(log n)  
 
     Set<String> treeSet = new TreeSet<>();
     treeSet.add("suleyman");
