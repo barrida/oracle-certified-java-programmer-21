@@ -5,6 +5,8 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import static org.junit.Assert.*;
+
 /**
  * @author Suleyman Yildirim
  */

@@ -1,6 +1,5 @@
 package generics_and_collections.generic.collections.framework.set;
 
-import com.sun.source.tree.Tree;
 
 import java.util.HashSet;
 import java.util.Set;
