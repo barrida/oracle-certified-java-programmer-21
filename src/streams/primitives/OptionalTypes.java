@@ -79,9 +79,7 @@ public class OptionalTypes {
 		// statistics
 		IntStream streamStatistics = IntStream.of(10, 32, 13, 44);
 		IntSummaryStatistics stats = streamStatistics.summaryStatistics();
-		System.out.println(stats);
 		assertEquals("IntSummaryStatistics{count=4, sum=99, min=10, average=24.750000, max=44}", stats.toString());
-		assertEquals(4, stats.getCount());
 		assertEquals(99, stats.getSum());
 		assertEquals(10, stats.getMin());
 		assertTrue(24.750000 == stats.getAverage());
