@@ -1,6 +1,6 @@
-# Java SE 8 Programmer II Certification | 1Z0-809
+# Java SE 21 Developer Professional Certification | 1Z0-830
 
-This repository is created to provide documentation and code samples for Oracle Certified Java SE 8 Programmer II exam.
+This repository provides documentation and code samples for the Oracle Certified Java SE 21 Developer Professional exam.
 
 
 # Table of Contents
